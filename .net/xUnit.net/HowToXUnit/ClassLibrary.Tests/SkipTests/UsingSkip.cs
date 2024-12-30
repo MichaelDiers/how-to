@@ -1,6 +1,6 @@
-﻿namespace ClassLibrary.Tests;
+﻿namespace ClassLibrary.Tests.SkipTests;
 
-public class UsingSkip(ITestOutputHelper testOutputHelper)
+public partial class UsingSkip(ITestOutputHelper testOutputHelper)
 {
     public static bool ConditionIsFalse => false;
 
@@ -114,12 +114,5 @@ public class UsingSkip(ITestOutputHelper testOutputHelper)
     public void SkipWhenUsingSkipTypeConditionIsTrueThereforeTestIsSkipped()
     {
         Assert.Fail("Test should be skipped before.");
-    }
-
-    public class SkipType
-    {
-        public static bool SkipTypeConditionIsFalse => false;
-
-        public static bool SkipTypeConditionIsTrue => true;
     }
 }
