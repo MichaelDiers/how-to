@@ -48,6 +48,24 @@ public class UsingSkip(ITestOutputHelper testOutputHelper)
         // do some tests
     }
 
+    [Fact(
+        SkipUnless = nameof(SkipType.SkipTypeConditionIsFalse),
+        SkipType = typeof(SkipType),
+        Skip = "Test should be skipped.")]
+    public void SkipUnlessUsingSkipTypeConditionIsFalseThereforeTestIsSkipped()
+    {
+        Assert.Fail("Test should be skipped before.");
+    }
+
+    [Fact(
+        SkipUnless = nameof(SkipType.SkipTypeConditionIsTrue),
+        SkipType = typeof(SkipType),
+        Skip = "Test should run.")]
+    public void SkipUnlessUsingSkipTypeConditionIsTrueThereforeTestRuns()
+    {
+        // do some tests
+    }
+
     [Fact]
     public void SkipWhen()
     {
@@ -78,5 +96,30 @@ public class UsingSkip(ITestOutputHelper testOutputHelper)
     public void SkipWhenConditionIsTrueThereforeTestIsSkipped()
     {
         Assert.Fail("Test should be skipped before.");
+    }
+
+    [Fact(
+        SkipWhen = nameof(SkipType.SkipTypeConditionIsFalse),
+        SkipType = typeof(SkipType),
+        Skip = "Test should run.")]
+    public void SkipWhenUsingSkipTypeConditionIsFalseThereforeTestRuns()
+    {
+        // do some tests
+    }
+
+    [Fact(
+        SkipWhen = nameof(SkipType.SkipTypeConditionIsTrue),
+        SkipType = typeof(SkipType),
+        Skip = "Test should be skipped.")]
+    public void SkipWhenUsingSkipTypeConditionIsTrueThereforeTestIsSkipped()
+    {
+        Assert.Fail("Test should be skipped before.");
+    }
+
+    public class SkipType
+    {
+        public static bool SkipTypeConditionIsFalse => false;
+
+        public static bool SkipTypeConditionIsTrue => true;
     }
 }
