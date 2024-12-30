@@ -2,14 +2,18 @@
 
 public class UsingSkip(ITestOutputHelper testOutputHelper)
 {
+    public static bool ConditionIsFalse => false;
+
+    public static bool ConditionIsTrue => true;
+
     [Fact]
     public void Skip()
     {
         // do some tests
 
-        Assert.Skip("Test is skipped here");
+        Assert.Skip("Test should be skipped here.");
 
-        Assert.Fail("Test should not reach");
+        Assert.Fail("Test should be skipped before.");
     }
 
     [Fact]
@@ -17,15 +21,31 @@ public class UsingSkip(ITestOutputHelper testOutputHelper)
     {
         Assert.SkipUnless(
             true,
-            "Test continues");
+            "Test should continue.");
 
-        testOutputHelper.WriteLine("test should pass here");
+        testOutputHelper.WriteLine("Test should pass here.");
 
         Assert.SkipUnless(
             false,
-            "Test is skipped here");
+            "Test should be skipped here.");
 
-        Assert.Fail("Test should not reach");
+        Assert.Fail("Test should be skipped before.");
+    }
+
+    [Fact(
+        SkipUnless = nameof(UsingSkip.ConditionIsFalse),
+        Skip = "Test should be skipped.")]
+    public void SkipUnlessConditionIsFalseThereforeTestIsSkipped()
+    {
+        Assert.Fail("Test should be skipped before.");
+    }
+
+    [Fact(
+        SkipUnless = nameof(UsingSkip.ConditionIsTrue),
+        Skip = "Test should run.")]
+    public void SkipUnlessConditionIsTrueThereforeTestRuns()
+    {
+        // do some tests
     }
 
     [Fact]
@@ -33,12 +53,30 @@ public class UsingSkip(ITestOutputHelper testOutputHelper)
     {
         Assert.SkipWhen(
             false,
-            "Test continues");
+            "Test should continue.");
+
+        testOutputHelper.WriteLine("Test should pass here.");
 
         Assert.SkipWhen(
             true,
-            "Test is skipped here");
+            "Test should be skipped here.");
 
-        Assert.Fail("Test should not reach");
+        Assert.Fail("Test should be skipped before.");
+    }
+
+    [Fact(
+        SkipWhen = nameof(UsingSkip.ConditionIsFalse),
+        Skip = "Test should run.")]
+    public void SkipWhenConditionIsFalseThereforeTestRuns()
+    {
+        // do some tests
+    }
+
+    [Fact(
+        SkipWhen = nameof(UsingSkip.ConditionIsTrue),
+        Skip = "Test should be skipped.")]
+    public void SkipWhenConditionIsTrueThereforeTestIsSkipped()
+    {
+        Assert.Fail("Test should be skipped before.");
     }
 }
