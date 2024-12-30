@@ -2,5 +2,5 @@
 
 public interface ICalcService
 {
-    IModel Add(IModel model, int value);
+    Task<IModel> AddAsync(IModel model, int value, CancellationToken cancellationToken);
 }

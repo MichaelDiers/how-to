@@ -2,8 +2,8 @@
 
 internal class CalcService : ICalcService
 {
-    public IModel Add(IModel model, int value)
+    public async Task<IModel> AddAsync(IModel model, int value, CancellationToken cancellationToken)
     {
-        return new Model(model.Value + value);
+        return await Task.FromResult(new Model(model.Value + value));
     }
 }
