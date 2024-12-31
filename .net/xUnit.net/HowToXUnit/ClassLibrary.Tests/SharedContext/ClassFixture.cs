@@ -1,12 +1,12 @@
 ﻿namespace ClassLibrary.Tests.SharedContext;
 
-public class ADisposableObject : IDisposable
+public class ClassFixture : IDisposable
 {
-    public Guid Guid { get; } = Guid.NewGuid();
+    public ADisposableObject ADisposableObject { get; } = new();
 
     /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
     public void Dispose()
     {
-        // dispose something
+        this.ADisposableObject.Dispose();
     }
 }
