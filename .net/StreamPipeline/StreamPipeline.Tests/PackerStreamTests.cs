@@ -11,7 +11,7 @@ public class PackerStreamTests
     /// <summary>
     ///     The used cancellation token for async operations.
     /// </summary>
-    private readonly CancellationToken cancellationToken = CancellationToken.None;
+    private readonly CancellationToken cancellationToken = TestContext.Current.CancellationToken;
 
     [Fact]
     public async Task PackAndUnpackAsync()
