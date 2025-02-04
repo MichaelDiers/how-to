@@ -29,8 +29,8 @@ public class RsaAesHowTo
     public async Task<byte[]> DecryptAsync(string privateKeyPem, byte[] data, CancellationToken cancellationToken)
     {
         // initialize input and output stream
-        var inputStream = new MemoryStream(data);
-        var outputStream = new MemoryStream();
+        using var inputStream = new MemoryStream(data);
+        using var outputStream = new MemoryStream();
 
         // check header and read encrypted aes key
         var encryptedAesKey = await RsaAesHowTo.ProcessHeaderAsync(
@@ -79,7 +79,7 @@ public class RsaAesHowTo
             cancellationToken);
 
         // add header information
-        var outputMemoryStream = new MemoryStream();
+        using var outputMemoryStream = new MemoryStream();
         await RsaAesHowTo.WriteHeaderAsync(
             outputMemoryStream,
             RsaAesHowTo.SupportedVersion,
@@ -88,7 +88,7 @@ public class RsaAesHowTo
             cancellationToken);
 
         // encrypt using aes
-        var inputMemoryStream = new MemoryStream(data);
+        using var inputMemoryStream = new MemoryStream(data);
         var aesHowTo = new AesHowTo();
         await aesHowTo.EncryptAsync(
             aes.Key,

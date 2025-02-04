@@ -79,13 +79,13 @@ public class AesBrotliHowTo
 
         // The cryptoStream has to be disposed before calling outputStream.ToArray(),
         // otherwise the final block gets invalid due to Aes.Padding issues.
-        var cryptoStream = new CryptoStream(
+        await using var cryptoStream = new CryptoStream(
             inputStream,
             cryptoTransform,
             CryptoStreamMode.Read);
 
         // decompress using brotli
-        var brotliStream = new BrotliStream(
+        await using var brotliStream = new BrotliStream(
             cryptoStream,
             CompressionMode.Decompress);
 
