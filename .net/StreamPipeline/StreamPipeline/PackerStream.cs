@@ -108,11 +108,11 @@ public class PackerStream : Stream
         }
 
         // initialize aes and the encryptor
-        using var aes = Aes.Create();
-        aes.Padding = PaddingMode.PKCS7;
-        aes.Key = aesKey;
-        aes.GenerateIV();
+        using var aes = PackerStream.InitializeAes(aesKey);
         var cryptoTransform = aes.CreateEncryptor();
+
+        // write the iv length to the stream
+        writeableStream.WriteByte((byte) aes.IV.Length);
 
         // write the iv to the stream
         await writeableStream.WriteAsync(
@@ -159,11 +159,13 @@ public class PackerStream : Stream
         }
 
         // initialize aes and the decryptor
-        using var aes = Aes.Create();
-        aes.Padding = PaddingMode.PKCS7;
-        aes.Key = aesKey;
+        var ivLength = readableStream.ReadByte();
+        if (ivLength < 1)
+        {
+            throw new InvalidOperationException();
+        }
 
-        var iv = new byte[aes.IV.Length];
+        var iv = new byte[ivLength];
         var actualIvLength = await readableStream.ReadAsync(
             iv,
             cancellationToken);
@@ -172,7 +174,9 @@ public class PackerStream : Stream
             throw new InvalidOperationException();
         }
 
-        aes.IV = iv;
+        using var aes = PackerStream.InitializeAes(
+            aesKey,
+            iv);
 
         var cryptoTransform = aes.CreateDecryptor();
 
@@ -325,5 +329,29 @@ public class PackerStream : Stream
         this.brotliStream.Dispose();
         this.cryptoStream.Dispose();
         base.Dispose(disposing);
+    }
+
+    /// <summary>
+    ///     Initialize <see cref="Aes" /> using the given <paramref name="key" /> and an optional <see cref="Aes.IV" />.
+    /// </summary>
+    /// <param name="key">The aes key.</param>
+    /// <param name="iv">If given the <see cref="Aes.IV" /> is used; otherwise a new iv is generated.</param>
+    /// <returns>A new <see cref="Aes" /> instance.</returns>
+    private static Aes InitializeAes(byte[] key, byte[]? iv = null)
+    {
+        var aes = Aes.Create();
+        aes.Padding = PaddingMode.PKCS7;
+        aes.Key = key;
+
+        if (iv is null)
+        {
+            aes.GenerateIV();
+        }
+        else
+        {
+            aes.IV = iv;
+        }
+
+        return aes;
     }
 }
