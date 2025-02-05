@@ -504,6 +504,7 @@ public ICommand $MVVM_COMMAND_NAME$Command =&gt;&#xD;
 /// &lt;/summary&gt;&#xD;
 public $PROP_TYPE$ $PROP_NAME$ { get; set; } $PROP_INIT$;</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=auit/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=decryptor/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=ffmpeg/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=firestore/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Firestore/@EntryIndexedValue">True</s:Boolean>

@@ -17,17 +17,17 @@ public class PackerStreamTests
     public async Task PackAndUnpackAsync()
     {
         // generate a new aes key
-        var aes = Aes.Create();
+        using var aes = Aes.Create();
 
         // init test data
         const string data = TestData.LoremIpsum;
         var byteData = Encoding.UTF8.GetBytes(data);
 
         using var packedStream = new MemoryStream();
-        await using (var packer = await PackerStream.InitializePackStreamAsync(
+        await using (var packer = new PackerStream(
                          packedStream,
-                         aes.Key,
-                         this.cancellationToken))
+                         PackerStreamMode.Pack,
+                         aes.Key))
         {
             await packer.WriteAsync(
                 byteData,
@@ -42,10 +42,10 @@ public class PackerStreamTests
 
         using var input = new MemoryStream(encryptedAndCompressed);
         using var unpackStream = new MemoryStream();
-        await using (var packer = await PackerStream.InitializeUnPackStreamAsync(
+        await using (var packer = new PackerStream(
                          input,
-                         aes.Key,
-                         this.cancellationToken))
+                         PackerStreamMode.Unpack,
+                         aes.Key))
         {
             await packer.CopyToAsync(
                 unpackStream,
@@ -66,17 +66,17 @@ public class PackerStreamTests
     public async Task PackAsync()
     {
         // generate a new aes key
-        var aes = Aes.Create();
+        using var aes = Aes.Create();
 
         // init test data
         const string data = TestData.LoremIpsum;
         var byteData = Encoding.UTF8.GetBytes(data);
 
         using var output = new MemoryStream();
-        await using (var packer = await PackerStream.InitializePackStreamAsync(
+        await using (var packer = new PackerStream(
                          output,
-                         aes.Key,
-                         this.cancellationToken))
+                         PackerStreamMode.Pack,
+                         aes.Key))
         {
             await packer.WriteAsync(
                 byteData,
