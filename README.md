@@ -2,11 +2,11 @@
 
 Short instructions on various project-independent problems.
 
-## [.NET](.net).
+## [.NET](.net)
 
 ### [Cryptography](.net/Crypto)
 
-Encrypt and decrypt data using [RSA](https://csrc.nist.gov/glossary/term/rsa), [AES](https://csrc.nist.gov/glossary/term/advanced_encryption_standard) and a combination of both algorithms. Shows how to create and process a custom AES header.
+Encrypt and decrypt data using [RSA](https://csrc.nist.gov/glossary/term/rsa), [AES](https://csrc.nist.gov/glossary/term/advanced_encryption_standard) and a combination of both algorithms. Shows how to create and process a custom [AES](https://csrc.nist.gov/glossary/term/advanced_encryption_standard) header.
 
 ### [Custom Streams](.net/StreamPipeline)
 
