@@ -10,6 +10,6 @@ Encrypt and decrypt data using [RSA](https://csrc.nist.gov/glossary/term/rsa), [
 
 Combine multiple [streams](https://learn.microsoft.com/en-gb/dotnet/api/system.io.stream) to a single stream pipeline: Compress data using [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) followed by [AES](https://csrc.nist.gov/glossary/term/advanced_encryption_standard) encryption.
 
-## [xUnit.net](https://xUnit.net/)
+## [xUnit.net](.net/xUnit.net/)
 
 Howto of [xUnit.net](https://xUnit.net/) including matrix test data, shared context and test case ordering.
