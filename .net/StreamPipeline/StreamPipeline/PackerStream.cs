@@ -7,41 +7,33 @@ using System.Security.Cryptography;
 ///     A custom stream that supports <see cref="BrotliStream" /> compression and <see cref="Aes" /> encryption.
 /// </summary>
 /// <seealso cref="System.IO.Stream" />
-public class PackerStream : Stream
+public class PackerStream(Stream stream, PackerStreamMode packerStreamMode, byte[] aesKey) : Stream
 {
     /// <summary>
     ///     The brotli stream is used for compression and decompression.
     /// </summary>
-    private readonly BrotliStream brotliStream;
-
-    /// <summary>
-    ///     Indicates whether the stream is writable (compress/encrypt) or readable (decompress/decrypt).
-    /// </summary>
-    private readonly bool canRead;
+    private BrotliStream? brotliStream;
 
     /// <summary>
     ///     The crypto stream is used for <see cref="Aes" /> encryption and decryption.
     /// </summary>
-    private readonly CryptoStream cryptoStream;
+    private CryptoStream? cryptoStream;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="PackerStream" /> class.
+    ///     The crypto transform for en- or decoding.
     /// </summary>
-    /// <param name="brotliStream">The brotli stream is used for compression and decompression.</param>
-    /// <param name="cryptoStream">The crypto stream is used for <see cref="Aes" /> encryption and decryption.</param>
-    /// <param name="canRead">Indicates whether the stream is writable (compress/encrypt) or readable (decompress/decrypt).</param>
-    private PackerStream(BrotliStream brotliStream, CryptoStream cryptoStream, bool canRead)
-    {
-        this.cryptoStream = cryptoStream;
-        this.canRead = canRead;
-        this.brotliStream = brotliStream;
-    }
+    private ICryptoTransform? cryptoTransform;
+
+    /// <summary>
+    ///     Indicates whether the <see cref="brotliStream" /> and <see cref="cryptoStream" /> is initialized.
+    /// </summary>
+    private bool isInitialized;
 
     /// <summary>When overridden in a derived class, gets a value indicating whether the current stream supports reading.</summary>
     /// <returns>
     ///     <see langword="true" /> if the stream supports reading; otherwise, <see langword="false" />.
     /// </returns>
-    public override bool CanRead => this.canRead;
+    public override bool CanRead => packerStreamMode == PackerStreamMode.Unpack;
 
     /// <summary>When overridden in a derived class, gets a value indicating whether the current stream supports seeking.</summary>
     /// <returns>
@@ -53,7 +45,7 @@ public class PackerStream : Stream
     /// <returns>
     ///     <see langword="true" /> if the stream supports writing; otherwise, <see langword="false" />.
     /// </returns>
-    public override bool CanWrite => !this.canRead;
+    public override bool CanWrite => packerStreamMode == PackerStreamMode.Pack;
 
     /// <summary>When overridden in a derived class, gets the length in bytes of the stream.</summary>
     /// <exception cref="T:System.NotSupportedException">
@@ -82,120 +74,8 @@ public class PackerStream : Stream
     /// <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
     public override void Flush()
     {
-        this.brotliStream.Flush();
-        this.cryptoStream.Flush();
-    }
-
-    /// <summary>
-    ///     Initializes the pack stream to first compress and then encrypt.
-    /// </summary>
-    /// <param name="writeableStream">The packer stream writes the output to this stream.</param>
-    /// <param name="aesKey">The aes key that used to encrypt the stream data.</param>
-    /// <returns>A new <see cref="PackerStream" /> instance.</returns>
-    /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
-    /// <exception cref="ArgumentException">Stream is not writeable - writeableStream</exception>
-    public static async Task<PackerStream> InitializePackStreamAsync(
-        Stream writeableStream,
-        byte[] aesKey,
-        CancellationToken cancellationToken
-    )
-    {
-        if (!writeableStream.CanWrite)
-        {
-            throw new ArgumentException(
-                "Stream is not writeable",
-                nameof(writeableStream));
-        }
-
-        // initialize aes and the encryptor
-        using var aes = PackerStream.InitializeAes(aesKey);
-        var cryptoTransform = aes.CreateEncryptor();
-
-        // write the iv length to the stream
-        writeableStream.WriteByte((byte) aes.IV.Length);
-
-        // write the iv to the stream
-        await writeableStream.WriteAsync(
-            aes.IV,
-            cancellationToken);
-
-        // set the aes encrypt stream
-        var cryptoStream = new CryptoStream(
-            writeableStream,
-            cryptoTransform,
-            CryptoStreamMode.Write);
-
-        // compress using brotli
-        var brotliStream = new BrotliStream(
-            cryptoStream,
-            CompressionMode.Compress);
-
-        // the packer stream disposes brotliStream and cryptoStream
-        return new PackerStream(
-            brotliStream,
-            cryptoStream,
-            false);
-    }
-
-    /// <summary>
-    ///     Initializes the pack stream to first decrypt and then decompress.
-    /// </summary>
-    /// <param name="readableStream">The packer stream reads the input from this stream.</param>
-    /// <param name="aesKey">The aes key that used to decrypt the stream data.</param>
-    /// <returns>A new <see cref="PackerStream" /> instance.</returns>
-    /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
-    /// <exception cref="ArgumentException">Stream is not readable - readableStream</exception>
-    public static async Task<PackerStream> InitializeUnPackStreamAsync(
-        Stream readableStream,
-        byte[] aesKey,
-        CancellationToken cancellationToken
-    )
-    {
-        if (!readableStream.CanRead)
-        {
-            throw new ArgumentException(
-                "Stream is not readable",
-                nameof(readableStream));
-        }
-
-        // initialize aes and the decryptor
-        var ivLength = readableStream.ReadByte();
-        if (ivLength < 1)
-        {
-            throw new InvalidOperationException();
-        }
-
-        var iv = new byte[ivLength];
-        var actualIvLength = await readableStream.ReadAsync(
-            iv,
-            cancellationToken);
-        if (actualIvLength != iv.Length)
-        {
-            throw new InvalidOperationException();
-        }
-
-        using var aes = PackerStream.InitializeAes(
-            aesKey,
-            iv);
-
-        var cryptoTransform = aes.CreateDecryptor();
-
-        // set the aes encrypt stream
-        var cryptoStream = new CryptoStream(
-            readableStream,
-            cryptoTransform,
-            CryptoStreamMode.Read);
-
-        // compress using brotli
-        var brotliStream = new BrotliStream(
-            cryptoStream,
-            CompressionMode.Decompress);
-
-        // the packer stream disposes brotliStream and cryptoStream
-        return new PackerStream(
-            brotliStream,
-            cryptoStream,
-            true);
+        this.brotliStream?.Flush();
+        this.cryptoStream?.Flush();
     }
 
     /// <summary>
@@ -232,12 +112,17 @@ public class PackerStream : Stream
     /// </returns>
     public override int Read(byte[] buffer, int offset, int count)
     {
-        if (!this.canRead)
+        if (!this.CanRead)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("Stream is not readable.");
         }
 
-        return this.brotliStream.Read(
+        if (!this.isInitialized)
+        {
+            this.InitializeUnpackStream();
+        }
+
+        return this.brotliStream!.Read(
             buffer,
             offset,
             count);
@@ -310,7 +195,12 @@ public class PackerStream : Stream
             throw new NotSupportedException();
         }
 
-        this.brotliStream.Write(
+        if (!this.isInitialized)
+        {
+            this.InitializePackStream();
+        }
+
+        this.brotliStream!.Write(
             buffer,
             offset,
             count);
@@ -326,8 +216,9 @@ public class PackerStream : Stream
     /// </param>
     protected override void Dispose(bool disposing)
     {
-        this.brotliStream.Dispose();
-        this.cryptoStream.Dispose();
+        this.brotliStream?.Dispose();
+        this.cryptoStream?.Dispose();
+        this.cryptoTransform?.Dispose();
         base.Dispose(disposing);
     }
 
@@ -353,5 +244,95 @@ public class PackerStream : Stream
         }
 
         return aes;
+    }
+
+    /// <summary>
+    ///     Initializes the pack stream to first compress and then encrypt.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Stream is not writeable.</exception>
+    private void InitializePackStream()
+    {
+        if (this.isInitialized)
+        {
+            return;
+        }
+
+        if (!stream.CanWrite)
+        {
+            throw new InvalidOperationException("Stream is not writeable.");
+        }
+
+        // initialize aes and the encryptor
+        using var aes = PackerStream.InitializeAes(aesKey);
+        this.cryptoTransform = aes.CreateEncryptor();
+
+        // write the iv length to the stream
+        stream.WriteByte((byte) aes.IV.Length);
+
+        // write the iv to the stream
+        stream.Write(aes.IV);
+
+        // set the aes encrypt stream
+        this.cryptoStream = new CryptoStream(
+            stream,
+            this.cryptoTransform,
+            CryptoStreamMode.Write);
+
+        // compress using brotli
+        this.brotliStream = new BrotliStream(
+            this.cryptoStream,
+            CompressionMode.Compress);
+
+        this.isInitialized = true;
+    }
+
+    /// <summary>
+    ///     Initializes the pack stream to first decrypt and then decompress.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Stream is not readable.</exception>
+    private void InitializeUnpackStream()
+    {
+        if (this.isInitialized)
+        {
+            return;
+        }
+
+        if (!stream.CanRead)
+        {
+            throw new InvalidOperationException("Stream is not readable.");
+        }
+
+        // initialize aes and the decryptor
+        var ivLength = stream.ReadByte();
+        if (ivLength < 1)
+        {
+            throw new InvalidOperationException("Missing aes header: Length of iv not specified.");
+        }
+
+        var iv = new byte[ivLength];
+        var actualIvLength = stream.Read(iv);
+        if (actualIvLength != iv.Length)
+        {
+            throw new InvalidOperationException("Incomplete aes header: iv missing or incomplete.");
+        }
+
+        using var aes = PackerStream.InitializeAes(
+            aesKey,
+            iv);
+
+        this.cryptoTransform = aes.CreateDecryptor();
+
+        // set the aes encrypt stream
+        this.cryptoStream = new CryptoStream(
+            stream,
+            this.cryptoTransform,
+            CryptoStreamMode.Read);
+
+        // compress using brotli
+        this.brotliStream = new BrotliStream(
+            this.cryptoStream,
+            CompressionMode.Decompress);
+
+        this.isInitialized = true;
     }
 }
