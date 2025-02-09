@@ -503,6 +503,8 @@ public ICommand $MVVM_COMMAND_NAME$Command =&gt;&#xD;
 ///     Gets or sets the $PROP_NAME_LOWER$.&#xD;
 /// &lt;/summary&gt;&#xD;
 public $PROP_TYPE$ $PROP_NAME$ { get; set; } $PROP_INIT$;</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Adorner/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=adorners/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=auit/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=decryptor/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=ffmpeg/@EntryIndexedValue">True</s:Boolean>
