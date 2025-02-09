@@ -1,9 +1,22 @@
 ﻿<Window x:Class="HowToWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:watermark="clr-namespace:HowToWpf.Watermark"
         Title="MainWindow" 
         WindowState="Maximized">
-    <Grid>
-
-    </Grid>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <watermark:WatermarkHowTo
+                Grid.Row="0"
+                Grid.Column="1"/>
+        </Grid>
+    </ScrollViewer>
 </Window>
