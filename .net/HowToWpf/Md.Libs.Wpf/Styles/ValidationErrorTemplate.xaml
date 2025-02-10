@@ -27,27 +27,4 @@
             </StackPanel>
         </StackPanel>
     </ControlTemplate>
-    <!--
-    <ControlTemplate x:Key="ValidationErrorTemplate">
-        <Grid>
-            <StackPanel 
-                Orientation="Horizontal" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Bottom">
-                <Image 
-                    ToolTip="{Binding Path=/ErrorContent}" 
-                    Height="25"
-                    Width="25"
-                    Source="../Assets/material_symbol_error.png"/>
-                <TextBlock 
-                    Foreground="Red" 
-                    Text="{Binding Path=/ErrorContent}"/>
-                <StackPanel.RenderTransform>
-                    <TranslateTransform X="0" Y="0"/>
-                </StackPanel.RenderTransform>
-            </StackPanel>
-            <AdornedElementPlaceholder  />
-        </Grid>
-    </ControlTemplate>
-    -->
 </ResourceDictionary>

@@ -154,21 +154,21 @@ public static class WatermarkDependencyProperty
 
         control.IsVisibleChanged += WatermarkDependencyProperty.OnIsVisibleChanged;
 
-        if (control is ComboBox comboBox)
+        switch (control)
         {
-            comboBox.SelectionChanged += WatermarkDependencyProperty.OnHandleEvent;
-        }
-        else if (control is PasswordBox passwordBox)
-        {
-            passwordBox.GotFocus += WatermarkDependencyProperty.OnHandleEvent;
-            passwordBox.LostFocus += WatermarkDependencyProperty.OnHandleEvent;
-            passwordBox.PasswordChanged += WatermarkDependencyProperty.OnHandleEvent;
-        }
-        else if (control is TextBox textBox)
-        {
-            textBox.GotFocus += WatermarkDependencyProperty.OnHandleEvent;
-            textBox.LostFocus += WatermarkDependencyProperty.OnHandleEvent;
-            textBox.TextChanged += WatermarkDependencyProperty.OnHandleEvent;
+            case ComboBox comboBox:
+                comboBox.SelectionChanged += WatermarkDependencyProperty.OnHandleEvent;
+                break;
+            case PasswordBox passwordBox:
+                passwordBox.GotFocus += WatermarkDependencyProperty.OnHandleEvent;
+                passwordBox.LostFocus += WatermarkDependencyProperty.OnHandleEvent;
+                passwordBox.PasswordChanged += WatermarkDependencyProperty.OnHandleEvent;
+                break;
+            case TextBox textBox:
+                textBox.GotFocus += WatermarkDependencyProperty.OnHandleEvent;
+                textBox.LostFocus += WatermarkDependencyProperty.OnHandleEvent;
+                textBox.TextChanged += WatermarkDependencyProperty.OnHandleEvent;
+                break;
         }
     }
 
@@ -189,21 +189,21 @@ public static class WatermarkDependencyProperty
 
         control.IsVisibleChanged -= WatermarkDependencyProperty.OnIsVisibleChanged;
 
-        if (control is ComboBox comboBox)
+        switch (control)
         {
-            comboBox.SelectionChanged -= WatermarkDependencyProperty.OnHandleEvent;
-        }
-        else if (control is TextBox textBox)
-        {
-            textBox.GotFocus -= WatermarkDependencyProperty.OnHandleEvent;
-            textBox.LostFocus -= WatermarkDependencyProperty.OnHandleEvent;
-            textBox.TextChanged -= WatermarkDependencyProperty.OnHandleEvent;
-        }
-        else if (control is PasswordBox passwordBox)
-        {
-            passwordBox.GotFocus -= WatermarkDependencyProperty.OnHandleEvent;
-            passwordBox.LostFocus -= WatermarkDependencyProperty.OnHandleEvent;
-            passwordBox.PasswordChanged -= WatermarkDependencyProperty.OnHandleEvent;
+            case ComboBox comboBox:
+                comboBox.SelectionChanged -= WatermarkDependencyProperty.OnHandleEvent;
+                break;
+            case TextBox textBox:
+                textBox.GotFocus -= WatermarkDependencyProperty.OnHandleEvent;
+                textBox.LostFocus -= WatermarkDependencyProperty.OnHandleEvent;
+                textBox.TextChanged -= WatermarkDependencyProperty.OnHandleEvent;
+                break;
+            case PasswordBox passwordBox:
+                passwordBox.GotFocus -= WatermarkDependencyProperty.OnHandleEvent;
+                passwordBox.LostFocus -= WatermarkDependencyProperty.OnHandleEvent;
+                passwordBox.PasswordChanged -= WatermarkDependencyProperty.OnHandleEvent;
+                break;
         }
     }
 

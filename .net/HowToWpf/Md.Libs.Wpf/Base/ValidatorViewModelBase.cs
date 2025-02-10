@@ -38,14 +38,16 @@ public class ValidatorViewModelBase : ViewModelBase, INotifyDataErrorInfo
         var properties = !string.IsNullOrEmpty(propertyName) ? [propertyName] : this.errors.Keys;
         foreach (var property in properties)
         {
-            if (this.errors.TryGetValue(
+            if (!this.errors.TryGetValue(
                     property,
                     out var propertyErrors))
             {
-                foreach (var propertyError in propertyErrors)
-                {
-                    yield return propertyError;
-                }
+                continue;
+            }
+
+            foreach (var propertyError in propertyErrors)
+            {
+                yield return propertyError;
             }
         }
     }

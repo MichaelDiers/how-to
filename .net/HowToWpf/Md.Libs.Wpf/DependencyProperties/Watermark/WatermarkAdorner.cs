@@ -119,39 +119,21 @@ internal class WatermarkAdorner : Adorner
     /// <returns>The calculated origin of the watermark.</returns>
     private static Point CalculateOrigin(Control control, FormattedText formattedText)
     {
-        double x;
-        switch (control.HorizontalContentAlignment)
+        var x = control.HorizontalContentAlignment switch
         {
-            case HorizontalAlignment.Left:
-            case HorizontalAlignment.Stretch:
-                x = control.Padding.Left;
-                break;
-            case HorizontalAlignment.Center:
-                x = control.RenderSize.Width / 2 - formattedText.Width / 2;
-                break;
-            case HorizontalAlignment.Right:
-                x = control.RenderSize.Width - control.Padding.Right - formattedText.Width;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            HorizontalAlignment.Left or HorizontalAlignment.Stretch => control.Padding.Left,
+            HorizontalAlignment.Center => control.RenderSize.Width / 2 - formattedText.Width / 2,
+            HorizontalAlignment.Right => control.RenderSize.Width - control.Padding.Right - formattedText.Width,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
-        double y;
-        switch (control.VerticalContentAlignment)
+        var y = control.VerticalContentAlignment switch
         {
-            case VerticalAlignment.Stretch:
-            case VerticalAlignment.Top:
-                y = control.Padding.Top;
-                break;
-            case VerticalAlignment.Center:
-                y = control.RenderSize.Height / 2 - formattedText.Height / 2;
-                break;
-            case VerticalAlignment.Bottom:
-                y = control.RenderSize.Height - formattedText.Height - control.Padding.Bottom;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            VerticalAlignment.Stretch or VerticalAlignment.Top => control.Padding.Top,
+            VerticalAlignment.Center => control.RenderSize.Height / 2 - formattedText.Height / 2,
+            VerticalAlignment.Bottom => control.RenderSize.Height - formattedText.Height - control.Padding.Bottom,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
         return new Point(
             x,
