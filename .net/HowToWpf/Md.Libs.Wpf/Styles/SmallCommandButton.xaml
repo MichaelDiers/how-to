@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:smallCommandButton="clr-namespace:Md.Libs.Wpf.DependencyProperties.CommandButton">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="BaseCommandButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="Button" x:Key="SmallCommandButtonStyle" BasedOn="{StaticResource BaseCommandButtonStyle}">
+        <Style.Setters>
+            <Setter Property="Height" Value="64"/>
+            <Setter Property="Width" Value="64"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            <Image 
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                Source="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor},Path=(smallCommandButton:SmallCommandButtonImageDependencyProperty.Image)}"
+                                ToolTip="{TemplateBinding ToolTip}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>
