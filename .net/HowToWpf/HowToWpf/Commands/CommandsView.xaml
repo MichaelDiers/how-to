@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="HowToWpf.Commands.CommandsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commands="clr-namespace:HowToWpf.Commands"
+             xmlns:commands1="clr-namespace:Md.Libs.Wpf.Commands;assembly=Md.Libs.Wpf">
+    <UserControl.DataContext>
+        <commands:CommandsViewModel/>
+    </UserControl.DataContext>
+    <Expander Header="Commands How-To">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- input/output -->
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="CommandParameter"/>
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{Binding CommandParameter, UpdateSourceTrigger=PropertyChanged}"
+                Width="200"/>
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Content="Command Result"/>
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                IsEnabled="False"
+                IsReadOnly="True"
+                Text="{Binding CommandResult}"
+                Width="200"/>
+            <!-- CommandBase -->
+            <Button
+                Grid.Row="2"
+                Grid.Column="0"
+                Content="CommandBase (UI Blocking)"
+                Command="{Binding CommandBaseExampleCommand}"
+                CommandParameter="{Binding CommandParameter}"/>
+            <!-- GenericCommandBase -->
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                Content="GenericCommandBase (UI Blocking)"
+                Command="{Binding GenericCommandBaseExampleCommand}"
+                CommandParameter="{Binding CommandParameter}"/>
+            <!-- AsyncCommand -->
+            <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                Content="AsyncCommand (UI Non-Blocking)"
+                Command="{Binding AsyncCommandExampleCommand}"
+                CommandParameter="{Binding CommandParameter}"/>
+        </Grid>
+    </Expander>
+</UserControl>

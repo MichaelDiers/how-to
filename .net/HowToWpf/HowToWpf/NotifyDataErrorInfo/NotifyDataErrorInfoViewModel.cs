@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Md.Libs.Wpf.Base;
+using Md.Libs.Wpf.Commands;
 
 internal class NotifyDataErrorInfoViewModel : ValidatorViewModelBase
 {

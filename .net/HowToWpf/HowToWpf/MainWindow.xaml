@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:watermark="clr-namespace:HowToWpf.Watermark"
         xmlns:notifyDataErrorInfo="clr-namespace:HowToWpf.NotifyDataErrorInfo"
+        xmlns:commands="clr-namespace:HowToWpf.Commands"
         Title="MainWindow" 
         WindowState="Maximized">
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -21,6 +23,9 @@
                 Grid.Column="1"/>
             <notifyDataErrorInfo:NotifyDataErrorInfoView
                 Grid.Row="1"
+                Grid.Column="1"/>
+            <commands:CommandsView
+                Grid.Row="2"
                 Grid.Column="1"/>
         </Grid>
     </ScrollViewer>
