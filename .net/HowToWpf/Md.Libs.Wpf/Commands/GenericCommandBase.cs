@@ -1,4 +1,4 @@
-﻿namespace Md.Libs.Wpf.Base;
+﻿namespace Md.Libs.Wpf.Commands;
 
 using System.Windows.Input;
 
@@ -7,14 +7,14 @@ using System.Windows.Input;
 /// </summary>
 /// <param name="canExecute">A function that determines whether the command can execute in its current state.</param>
 /// <param name="execute">Defines the method to be called when the command is invoked.</param>
-/// <seealso cref="System.Windows.Input.ICommand" />
-public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execute) : ICommand
+/// <seealso cref="ICommand" />
+public class GenericCommandBase<T>(Func<T?, bool>? canExecute, Action<T?> execute) : ICommand
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="CommandBase" /> class.
     /// </summary>
     /// <param name="execute">Defines the method to be called when the command is invoked.</param>
-    public CommandBase(Action<object?> execute)
+    public GenericCommandBase(Action<T?> execute)
         : this(
             null,
             execute)
@@ -31,7 +31,7 @@ public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execut
     /// </returns>
     public bool CanExecute(object? parameter)
     {
-        return canExecute is null || canExecute(parameter);
+        return !AsyncCommandTaskHandler.IsBackgroundTaskActive && (canExecute is null || canExecute((T?) parameter));
     }
 
     /// <summary>
@@ -50,6 +50,8 @@ public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execut
     /// </param>
     public void Execute(object? parameter)
     {
-        execute(parameter);
+        AsyncCommandTaskHandler.Start();
+        execute((T?) parameter);
+        AsyncCommandTaskHandler.Terminated();
     }
 }
