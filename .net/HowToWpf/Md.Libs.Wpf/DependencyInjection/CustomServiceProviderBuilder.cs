@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 ///     Create a <see cref="ServiceProvider" /> that is used for dependency injection.
 /// </summary>
-public static class ServiceProviderBuilder
+public static class CustomServiceProviderBuilder
 {
     /// <summary>
     ///     Build a new <see cref="ServiceProvider" /> and add the given dependencies <paramref name="addDependencies" /> to

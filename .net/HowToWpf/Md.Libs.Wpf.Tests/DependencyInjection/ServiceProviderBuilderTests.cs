@@ -4,7 +4,7 @@ using Md.Libs.Wpf.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-///     Test for <see cref="ServiceProviderBuilder" />.
+///     Test for <see cref="CustomServiceProviderBuilder" />.
 /// </summary>
 public class ServiceProviderBuilderTests
 {
@@ -12,7 +12,7 @@ public class ServiceProviderBuilderTests
     ///     The initialized <see cref="IServiceProvider" />.
     /// </summary>
     private readonly IServiceProvider serviceProvider =
-        ServiceProviderBuilder.Build(ServiceCollectionExtensions.AddDependencies);
+        CustomServiceProviderBuilder.Build(ServiceCollectionExtensions.AddDependencies);
 
     /// <summary>
     ///     Try to get a service of a given type.
