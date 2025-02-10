@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate x:Key="ValidationErrorTemplate">
+        <StackPanel Margin="0">
+            <Border 
+                BorderBrush="Red" 
+                BorderThickness="1"
+                Margin="0"
+                Padding="0">
+                <AdornedElementPlaceholder />
+            </Border>
+            <StackPanel
+                Margin="0"
+                Orientation="Horizontal">
+                <Image 
+                    ToolTip="{Binding Path=/ErrorContent}" 
+                    Height="25"
+                    Margin="0"
+                    Width="25"
+                    Source="../Assets/material_symbol_error.png"/>
+                <TextBlock
+                    FontStyle="Italic"
+                    Foreground="Red"
+                    Margin="2"
+                    Padding="0"
+                    Text="{Binding [0].ErrorContent}" />
+            </StackPanel>
+        </StackPanel>
+    </ControlTemplate>
+    <!--
+    <ControlTemplate x:Key="ValidationErrorTemplate">
+        <Grid>
+            <StackPanel 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom">
+                <Image 
+                    ToolTip="{Binding Path=/ErrorContent}" 
+                    Height="25"
+                    Width="25"
+                    Source="../Assets/material_symbol_error.png"/>
+                <TextBlock 
+                    Foreground="Red" 
+                    Text="{Binding Path=/ErrorContent}"/>
+                <StackPanel.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </StackPanel.RenderTransform>
+            </StackPanel>
+            <AdornedElementPlaceholder  />
+        </Grid>
+    </ControlTemplate>
+    -->
+</ResourceDictionary>

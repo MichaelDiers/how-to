@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="DefaultValues.xaml"/>
+        <ResourceDictionary Source="ValidationErrorTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="Control" x:Key="DefaultControlStyle">
@@ -20,12 +21,16 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
-    <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}"/>
+    <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationErrorTemplate}"/>
+    </Style>
 
     <Style TargetType="Expander" x:Key="DefaultExpanderStyle" BasedOn="{StaticResource DefaultControlStyle}"/>
     <Style TargetType="Expander" BasedOn="{StaticResource DefaultExpanderStyle}"/>
 
-    <Style TargetType="PasswordBox" x:Key="DefaultPasswordBoxStyle" BasedOn="{StaticResource DefaultControlStyle}"/>
+    <Style TargetType="PasswordBox" x:Key="DefaultPasswordBoxStyle" BasedOn="{StaticResource DefaultControlStyle}">
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationErrorTemplate}"/>
+    </Style>
     <Style TargetType="PasswordBox" BasedOn="{StaticResource DefaultPasswordBoxStyle}"/>
 
     <Style TargetType="ScrollViewer" x:Key="DefaultScrollViewerStyle">
@@ -43,7 +48,9 @@
     </Style>
     <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockStyle}"/>
 
-    <Style TargetType="TextBox" x:Key="DefaultTextBoxStyle" BasedOn="{StaticResource DefaultControlStyle}"/>
+    <Style TargetType="TextBox" x:Key="DefaultTextBoxStyle" BasedOn="{StaticResource DefaultControlStyle}">
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationErrorTemplate}"/>
+    </Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}"/>
 
     <Style TargetType="Window" x:Key="DefaultWindowStyle" BasedOn="{StaticResource DefaultControlStyle}"/>
