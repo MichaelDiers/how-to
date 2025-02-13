@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dependencyProperties="clr-namespace:Md.Libs.Wpf.DependencyProperties">
+    <ControlTemplate TargetType="Button" x:Key="CommandButtonTemplate">
+        <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="5"
+            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+            <StackPanel Orientation="Horizontal">
+                <Image 
+                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                    Source="{Binding Path=(dependencyProperties:ImageDependencyProperty.Image), RelativeSource={RelativeSource TemplatedParent}}"
+                    ToolTip="{TemplateBinding ToolTip}"
+                    VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                <ContentPresenter Content="{TemplateBinding Content}"/>
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>
