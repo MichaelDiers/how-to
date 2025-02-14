@@ -3,18 +3,18 @@
 using System.Windows.Input;
 
 /// <summary>
-///     A base implementation of <see cref="ICommand" />.
+///     A synchronous implementation of <see cref="ICommand" /> that blocks the UI thread.
 /// </summary>
 /// <param name="canExecute">A function that determines whether the command can execute in its current state.</param>
 /// <param name="execute">Defines the method to be called when the command is invoked.</param>
 /// <seealso cref="ICommand" />
-public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execute) : ICommand
+internal class SyncCommand<T>(Func<T?, bool>? canExecute, Action<T?> execute) : ICommand
 {
     /// <summary>
-    ///     Initializes a new instance of the <see cref="CommandBase" /> class.
+    ///     Initializes a new instance of the <see cref="AsyncCommand{TCommandParameter,TExecuteResult}" /> class.
     /// </summary>
     /// <param name="execute">Defines the method to be called when the command is invoked.</param>
-    public CommandBase(Action<object?> execute)
+    public SyncCommand(Action<T?> execute)
         : this(
             null,
             execute)
@@ -31,7 +31,7 @@ public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execut
     /// </returns>
     public bool CanExecute(object? parameter)
     {
-        return !AsyncCommandTaskHandler.IsBackgroundTaskActive && (canExecute is null || canExecute(parameter));
+        return canExecute is null || canExecute((T?) parameter);
     }
 
     /// <summary>
@@ -50,8 +50,6 @@ public class CommandBase(Func<object?, bool>? canExecute, Action<object?> execut
     /// </param>
     public void Execute(object? parameter)
     {
-        AsyncCommandTaskHandler.Start();
-        execute(parameter);
-        AsyncCommandTaskHandler.Terminated();
+        execute((T?) parameter);
     }
 }
