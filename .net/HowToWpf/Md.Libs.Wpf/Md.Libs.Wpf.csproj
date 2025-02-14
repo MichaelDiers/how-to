@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Assets\license.txt" />
+    <None Remove="Assets\material_symbol_cancel.png" />
     <None Remove="Assets\material_symbol_error.png" />
   </ItemGroup>
 
@@ -16,6 +17,9 @@
     <Content Include="Assets\license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\material_symbol_cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\material_symbol_error.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
