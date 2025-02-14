@@ -4,7 +4,6 @@
         xmlns:watermark="clr-namespace:HowToWpf.Watermark"
         xmlns:notifyDataErrorInfo="clr-namespace:HowToWpf.NotifyDataErrorInfo"
         xmlns:commands="clr-namespace:HowToWpf.Commands"
-        xmlns:controls="clr-namespace:Md.Libs.Wpf.Controls;assembly=Md.Libs.Wpf"
         Title="MainWindow" 
         WindowState="Maximized">
     <ScrollViewer>

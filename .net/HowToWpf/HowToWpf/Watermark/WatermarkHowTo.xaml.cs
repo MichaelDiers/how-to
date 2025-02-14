@@ -1,11 +1,9 @@
 ﻿namespace HowToWpf.Watermark;
 
-using System.Windows.Controls;
-
 /// <summary>
 ///     Interaction logic for WatermarkHowTo.xaml
 /// </summary>
-public partial class WatermarkHowTo : UserControl
+public partial class WatermarkHowTo
 {
     public WatermarkHowTo()
     {

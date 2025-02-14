@@ -212,12 +212,14 @@ internal class AsyncCommand<TCommandParameter, TExecuteResult> : ViewModelBase, 
 
         this.PreExecute();
 
-        if (!this.RunExecute(parameter))
+        if (this.RunExecute(parameter))
         {
-            if (!this.PostExecute())
-            {
-                this.CleanUp();
-            }
+            return;
+        }
+
+        if (!this.PostExecute())
+        {
+            this.CleanUp();
         }
     }
 
@@ -274,16 +276,18 @@ internal class AsyncCommand<TCommandParameter, TExecuteResult> : ViewModelBase, 
     {
         try
         {
-            if (this.preExecute is not null)
+            if (this.preExecute is null)
             {
-                if (this.dispatcher.CheckAccess())
-                {
-                    this.preExecute();
-                }
-                else
-                {
-                    this.dispatcher.Invoke(this.preExecute);
-                }
+                return;
+            }
+
+            if (this.dispatcher.CheckAccess())
+            {
+                this.preExecute();
+            }
+            else
+            {
+                this.dispatcher.Invoke(this.preExecute);
             }
         }
         catch

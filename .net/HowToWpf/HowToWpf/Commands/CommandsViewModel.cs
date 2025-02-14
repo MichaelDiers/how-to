@@ -1,6 +1,5 @@
 ﻿namespace HowToWpf.Commands;
 
-using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using Md.Libs.Wpf.Base;
 using Md.Libs.Wpf.Commands;
@@ -13,37 +12,37 @@ internal class CommandsViewModel : ViewModelBase
     /// <summary>
     ///     The add 3 command parameter.
     /// </summary>
-    private AddCommandParameter add3CommandParameter;
+    private AddCommandParameter add3CommandParameter = null!;
 
     /// <summary>
     ///     The command to add by command parameter.
     /// </summary>
-    private IAsyncCommand addCommandParameterAsyncCommand;
+    private IAsyncCommand addCommandParameterAsyncCommand = null!;
 
     /// <summary>
     ///     The add by command parameter sync command.
     /// </summary>
-    private ICommand addCommandParameterSyncSyncCommand;
+    private ICommand addCommandParameterSyncSyncCommand = null!;
 
     /// <summary>
     ///     The command to add an integer to the result.
     /// </summary>
-    private IAsyncCommand addIntAsyncCommand;
+    private IAsyncCommand addIntAsyncCommand = null!;
 
     /// <summary>
     ///     The command to add an int that is cancellable.
     /// </summary>
-    private ICancellableCommand addIntCancellableCommand1;
+    private ICancellableCommand addIntCancellableCommand1 = null!;
 
     /// <summary>
     ///     The command to add an int that is cancellable.
     /// </summary>
-    private ICancellableCommand addIntCancellableCommand2;
+    private ICancellableCommand addIntCancellableCommand2 = null!;
 
     /// <summary>
     ///     The sync command for adding an integer value.
     /// </summary>
-    private ICommand addIntSyncCommand;
+    private ICommand addIntSyncCommand = null!;
 
     /// <summary>
     ///     The current value async command.
@@ -58,7 +57,6 @@ internal class CommandsViewModel : ViewModelBase
     private bool isActive;
     private bool isActiveCancellable;
 
-    [SetsRequiredMembers]
     public CommandsViewModel()
     {
         this.CurrentValueSyncCommand = 0;
