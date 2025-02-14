@@ -2,7 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:commands="clr-namespace:HowToWpf.Commands"
-             xmlns:commandButton="clr-namespace:Md.Libs.Wpf.DependencyProperties.CommandButton;assembly=Md.Libs.Wpf">
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls="clr-namespace:Md.Libs.Wpf.Controls;assembly=Md.Libs.Wpf"
+             xmlns:dp="clr-namespace:Md.Libs.Wpf.DependencyProperties;assembly=Md.Libs.Wpf">
     <UserControl.DataContext>
         <commands:CommandsViewModel/>
     </UserControl.DataContext>
@@ -13,63 +15,147 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <!-- input/output -->
-            <Label
+            <!-- UI Blocking -->
+            <TextBlock 
                 Grid.Row="0"
                 Grid.Column="0"
-                Content="CommandParameter"/>
-            <TextBox
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="{Binding CommandParameter, UpdateSourceTrigger=PropertyChanged}"
-                Width="200"/>
-            <Label
+                Grid.ColumnSpan="4"
+                MaxWidth="600"
+                Text="Buttons are blocking ui updates: No value changes are displayed. But you still can click on the buttons to start the Command.Execute methods."
+                TextWrapping="Wrap"/>
+            <Button
                 Grid.Row="1"
                 Grid.Column="0"
-                Content="Command Result"/>
-            <TextBox
+                Command="{Binding AddIntSyncCommand}"
+                Content="Add 1 (Sync)"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
+                ToolTip="Add 1 to the result.">
+                <Button.CommandParameter>
+                    <system:Int32>1</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
                 Grid.Row="1"
                 Grid.Column="1"
+                Command="{Binding AddIntSyncCommand}"
+                Content="Minus 2 (Sync)"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_remove.png"
+                ToolTip="Subtract 2 from the result.">
+                <Button.CommandParameter>
+                    <system:Int32>-2</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Command="{Binding AddCommandParameterSyncCommand}"
+                CommandParameter="{Binding Add3CommandParameter}"
+                Content="Add 3 (Sync)"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
+                ToolTip="Add 3 to the result."/>
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="3"
                 IsEnabled="False"
                 IsReadOnly="True"
-                Text="{Binding CommandResult}"
-                Width="200"/>
-            <!-- CommandBase -->
-            <Button
+                Text="{Binding CurrentValueSyncCommand }"/>
+            <!-- Not UI Blocking -->
+            <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Content="CommandBase (UI Blocking)"
-                Command="{Binding CommandBaseExampleCommand}"
-                CommandParameter="{Binding CommandParameter}"/>
-            <!-- GenericCommandBase -->
-            <Button
-                Grid.Row="2"
-                Grid.Column="1"
-                Content="GenericCommandBase (UI Blocking)"
-                Command="{Binding GenericCommandBaseExampleCommand}"
-                CommandParameter="{Binding CommandParameter}"/>
-            <!-- AsyncCommand -->
+                Grid.ColumnSpan="4"
+                MaxWidth="600"
+                Text="Async Command: ICommand.Execute runs in a new Task. Add 1 is independent of the other buttons and is only inactive if the add 1 command is running. Buttons add 2 and add 3 are independent of add 1. Buttons add 2 and add 3 are inactive if the command of add 2 or add 3 are running."
+                TextWrapping="Wrap"/>
             <Button
                 Grid.Row="3"
                 Grid.Column="0"
-                Content="AsyncCommand"
-                ToolTip="AsyncCommand (UI Non-Blocking)"
-                Command="{Binding AsyncCommandExampleCommand}"
-                CommandParameter="{Binding CommandParameter}"
-                commandButton:LargeCommandButtonImageDependencyProperty.Image="/Assets/material_symbol_change_circle.png"/>
-            <!-- AsyncCommand -->
+                Command="{Binding AddIntAsyncCommand}"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
+                ToolTip="Add 1 to the result (async).">
+                <Button.CommandParameter>
+                    <system:Int32>1</system:Int32>
+                </Button.CommandParameter>
+            </Button>
             <Button
                 Grid.Row="3"
                 Grid.Column="1"
-                ToolTip="AsyncCommand (UI Non-Blocking)"
-                Command="{Binding AsyncCommandExampleCommand}"
-                CommandParameter="{Binding CommandParameter}"
-                commandButton:SmallCommandButtonImageDependencyProperty.Image="/Assets/material_symbol_change_circle.png"/>
+                Command="{Binding AddIntAsyncCommand}"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_remove.png"
+                ToolTip="Subtract 2 from the result. (async)">
+                <Button.CommandParameter>
+                    <system:Int32>-2</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Row="3"
+                Grid.Column="2"
+                Command="{Binding AddCommandParameterAsyncCommand}"
+                CommandParameter="{Binding Add3CommandParameter}"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
+                ToolTip="Add 3 to the result. (async)"/>
+            <TextBox
+                Grid.Row="3"
+                Grid.RowSpan="3"
+                Grid.Column="3"
+                IsEnabled="False"
+                IsReadOnly="True"
+                Text="{Binding CurrentValueAsyncCommand}"/>
+            <!-- Cancel Command -->
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                MaxWidth="600"
+                Text="Cancel command overlay"
+                TextWrapping="Wrap"/>
+            <Button
+                Grid.Row="5"
+                Grid.Column="0"
+                x:Name="CancellableButton1"
+                Command="{Binding AddIntCancellableCommand1}"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
+                ToolTip="Add 1 to the result (async).">
+                <Button.CommandParameter>
+                    <system:Int32>1</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <controls:CancelButtonOverlay
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                CancelCommand="{Binding AddIntCancellableCommand1.CancelCommand}"
+                CommandText="Cancel: Add 1 to the result (async)."
+                CancellingCommandText="Cancelling: Add 1 to the result (async)."
+                Image="../Assets/material_symbol_cancel.png"/>
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Command="{Binding AddIntCancellableCommand2}"
+                dp:ImageDependencyProperty.Image="../Assets/material_symbol_remove.png"
+                ToolTip="Subtract 2 from the result. (async)">
+                <Button.CommandParameter>
+                    <system:Int32>-2</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <controls:CancelButtonOverlay
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                CancelCommand="{Binding AddIntCancellableCommand2.CancelCommand}"
+                ToolTip="Cancel: Subtract 2 from the result (async)."
+                CommandText="Cancel: Subtract 2 from the result (async)."
+                CancellingCommandText="Cancelling: Subtract 2 from the result. (async)"
+                Image="../Assets/material_symbol_cancel.png"/>
         </Grid>
     </Expander>
 </UserControl>

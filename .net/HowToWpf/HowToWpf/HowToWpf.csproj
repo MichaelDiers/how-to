@@ -10,7 +10,9 @@
 
   <ItemGroup>
     <None Remove="Assets\license.txt" />
+    <None Remove="Assets\material_symbol_add.png" />
     <None Remove="Assets\material_symbol_change_circle.png" />
+    <None Remove="Assets\material_symbol_remove.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +27,16 @@
     <Resource Include="Assets\license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\material_symbol_add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\material_symbol_cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\material_symbol_change_circle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\material_symbol_remove.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

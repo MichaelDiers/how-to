@@ -63,7 +63,7 @@ internal class NotifyDataErrorInfoViewModel : ValidatorViewModelBase
     ///     Gets the submit command.
     /// </summary>
     public ICommand SubmitCommand =>
-        new GenericCommandBase<PasswordBox>(
+        CommandFactory.CreateSyncCommand<PasswordBox>(
             passwordBox =>
             {
                 if (passwordBox is null)

@@ -22,7 +22,7 @@ internal class WatermarkViewModel : ViewModelBase
     ///     Gets the reset values command.
     /// </summary>
     public ICommand ResetValuesCommand =>
-        new CommandBase(
+        CommandFactory.CreateSyncCommand<object>(
             _ =>
             {
                 this.SelectedComboBoxValue = null;
@@ -45,7 +45,7 @@ internal class WatermarkViewModel : ViewModelBase
     ///     Gets the set values command.
     /// </summary>
     public ICommand SetValuesCommand =>
-        new CommandBase(
+        CommandFactory.CreateSyncCommand<object>(
             _ =>
             {
                 this.SelectedComboBoxValue = this.ComboBoxValues.First();
