@@ -1,19 +1,36 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="BaseCommandButtonStyle.xaml"/>
-        <ResourceDictionary Source="../Templates/CommandButtonTemplate.xaml"/>
+        <ResourceDictionary
+            Source="BaseCommandButtonStyle.xaml" />
+        <ResourceDictionary
+            Source="../Templates/CommandButtonTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="Button" x:Key="CommandButtonStyle" BasedOn="{StaticResource BaseCommandButtonStyle}">
-        <Setter Property="Height" Value="96"/>
-        <Setter Property="Template" Value="{StaticResource CommandButtonTemplate}"/>
-        <Setter Property="Width" Value="300"/>
+    <Style
+        TargetType="Button"
+        x:Key="CommandButtonStyle"
+        BasedOn="{StaticResource BaseCommandButtonStyle}">
+        <Setter
+            Property="Height"
+            Value="96" />
+        <Setter
+            Property="Template"
+            Value="{StaticResource CommandButtonTemplate}" />
+        <Setter
+            Property="Width"
+            Value="300" />
         <Style.Triggers>
-            <Trigger Property="Content" Value="{x:Null}">
-                <Setter Property="Height" Value="64"/>
-                <Setter Property="Width" Value="64"/>
+            <Trigger
+                Property="Content"
+                Value="{x:Null}">
+                <Setter
+                    Property="Height"
+                    Value="64" />
+                <Setter
+                    Property="Width"
+                    Value="64" />
             </Trigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
-    

@@ -1,37 +1,49 @@
-﻿<UserControl x:Class="HowToWpf.Commands.CommandsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:commands="clr-namespace:HowToWpf.Commands"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:controls="clr-namespace:Md.Libs.Wpf.Controls;assembly=Md.Libs.Wpf"
-             xmlns:dp="clr-namespace:Md.Libs.Wpf.DependencyProperties;assembly=Md.Libs.Wpf">
+﻿<UserControl
+    x:Class="HowToWpf.Commands.CommandsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commands="clr-namespace:HowToWpf.Commands"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:controls="clr-namespace:Md.Libs.Wpf.Controls;assembly=Md.Libs.Wpf"
+    xmlns:dp="clr-namespace:Md.Libs.Wpf.DependencyProperties;assembly=Md.Libs.Wpf">
     <UserControl.DataContext>
-        <commands:CommandsViewModel/>
+        <commands:CommandsViewModel />
     </UserControl.DataContext>
-    <Expander Header="Commands How-To">
+    <Expander
+        Header="Commands How-To">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="1*" />
             </Grid.ColumnDefinitions>
             <!-- UI Blocking -->
-            <TextBlock 
+            <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
                 MaxWidth="600"
                 Text="Buttons are blocking ui updates: No value changes are displayed. But you still can click on the buttons to start the Command.Execute methods."
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap" />
             <Button
                 Grid.Row="1"
                 Grid.Column="0"
@@ -61,13 +73,13 @@
                 CommandParameter="{Binding Add3CommandParameter}"
                 Content="Add 3 (Sync)"
                 dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
-                ToolTip="Add 3 to the result."/>
+                ToolTip="Add 3 to the result." />
             <TextBox
                 Grid.Row="1"
                 Grid.Column="3"
                 IsEnabled="False"
                 IsReadOnly="True"
-                Text="{Binding CurrentValueSyncCommand }"/>
+                Text="{Binding CurrentValueSyncCommand }" />
             <!-- Not UI Blocking -->
             <TextBlock
                 Grid.Row="2"
@@ -75,7 +87,7 @@
                 Grid.ColumnSpan="4"
                 MaxWidth="600"
                 Text="Async Command: ICommand.Execute runs in a new Task. Add 1 is independent of the other buttons and is only inactive if the add 1 command is running. Buttons add 2 and add 3 are independent of add 1. Buttons add 2 and add 3 are inactive if the command of add 2 or add 3 are running."
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap" />
             <Button
                 Grid.Row="3"
                 Grid.Column="0"
@@ -102,14 +114,14 @@
                 Command="{Binding AddCommandParameterAsyncCommand}"
                 CommandParameter="{Binding Add3CommandParameter}"
                 dp:ImageDependencyProperty.Image="../Assets/material_symbol_add.png"
-                ToolTip="Add 3 to the result. (async)"/>
+                ToolTip="Add 3 to the result. (async)" />
             <TextBox
                 Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="3"
                 IsEnabled="False"
                 IsReadOnly="True"
-                Text="{Binding CurrentValueAsyncCommand}"/>
+                Text="{Binding CurrentValueAsyncCommand}" />
             <!-- Cancel Command -->
             <TextBlock
                 Grid.Row="4"
@@ -117,7 +129,7 @@
                 Grid.ColumnSpan="4"
                 MaxWidth="600"
                 Text="Cancel command overlay"
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap" />
             <Button
                 Grid.Row="5"
                 Grid.Column="0"
@@ -136,7 +148,7 @@
                 CancelCommand="{Binding AddIntCancellableCommand1.CancelCommand}"
                 CommandText="Cancel: Add 1 to the result (async)."
                 CancellingCommandText="Cancelling: Add 1 to the result (async)."
-                Image="../Assets/material_symbol_cancel.png"/>
+                Image="../Assets/material_symbol_cancel.png" />
             <Button
                 Grid.Row="5"
                 Grid.Column="1"
@@ -155,7 +167,7 @@
                 ToolTip="Cancel: Subtract 2 from the result (async)."
                 CommandText="Cancel: Subtract 2 from the result (async)."
                 CancellingCommandText="Cancelling: Subtract 2 from the result. (async)"
-                Image="../Assets/material_symbol_cancel.png"/>
+                Image="../Assets/material_symbol_cancel.png" />
         </Grid>
     </Expander>
 </UserControl>

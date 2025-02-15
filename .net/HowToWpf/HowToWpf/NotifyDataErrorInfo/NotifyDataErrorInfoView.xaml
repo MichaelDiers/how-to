@@ -1,60 +1,68 @@
-﻿<UserControl x:Class="HowToWpf.NotifyDataErrorInfo.NotifyDataErrorInfoView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:notifyDataErrorInfo="clr-namespace:HowToWpf.NotifyDataErrorInfo">
+﻿<UserControl
+    x:Class="HowToWpf.NotifyDataErrorInfo.NotifyDataErrorInfoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:notifyDataErrorInfo="clr-namespace:HowToWpf.NotifyDataErrorInfo">
     <UserControl.DataContext>
-        <notifyDataErrorInfo:NotifyDataErrorInfoViewModel/>
+        <notifyDataErrorInfo:NotifyDataErrorInfoViewModel />
     </UserControl.DataContext>
-    <Expander Header="NotifyDataErrorInfo">
+    <Expander
+        Header="NotifyDataErrorInfo">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
+                    Width="*" />
             </Grid.ColumnDefinitions>
 
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
-                Content="Required"/>
+                Content="Required" />
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="{Binding Text}"/>
+                Text="{Binding Text}" />
 
             <Label
                 Grid.Row="1"
                 Grid.Column="0"
-                Content="Not Second"/>
+                Content="Not Second" />
             <ComboBox
                 Grid.Row="1"
                 Grid.Column="1"
                 SelectedItem="{Binding SelectedComboBoxItem}"
-                ItemsSource="{Binding ComboBoxItems}"/>
+                ItemsSource="{Binding ComboBoxItems}" />
 
             <Label
                 Grid.Row="2"
                 Grid.Column="0"
-                Content="Validate on Submit"/>
-            <StackPanel     
+                Content="Validate on Submit" />
+            <StackPanel
                 Grid.Row="2"
-                Grid.Column="1" 
+                Grid.Column="1"
                 Orientation="Horizontal">
-                <PasswordBox 
-                    x:Name="PasswordBox" 
+                <PasswordBox
+                    x:Name="PasswordBox"
                     MinWidth="200"
-                    Tag="{Binding PasswordTag}"/>
+                    Tag="{Binding PasswordTag}" />
                 <Button
                     Content="Submit"
                     Command="{Binding SubmitCommand}"
-                    CommandParameter="{Binding ElementName=PasswordBox}"/>
+                    CommandParameter="{Binding ElementName=PasswordBox}" />
             </StackPanel>
-            
+
         </Grid>
     </Expander>
 </UserControl>
