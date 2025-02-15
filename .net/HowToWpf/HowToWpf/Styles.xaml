@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary
-            Source="pack://application:,,,/Md.Libs.Wpf;component/Styles/DefaultStyles.xaml" />
+            Source="pack://application:,,,/Libs.Wpf;component/Styles/DefaultStyles.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Md.Libs.Wpf;component/Styles/CommandButtonStyle.xaml" />
+            Source="pack://application:,,,/Libs.Wpf;component/Styles/CommandButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style
         TargetType="Button"

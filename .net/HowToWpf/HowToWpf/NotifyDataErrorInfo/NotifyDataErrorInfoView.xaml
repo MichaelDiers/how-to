@@ -6,63 +6,60 @@
     <UserControl.DataContext>
         <notifyDataErrorInfo:NotifyDataErrorInfoViewModel />
     </UserControl.DataContext>
-    <Expander
-        Header="NotifyDataErrorInfo">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
-                    Width="Auto" />
-                <ColumnDefinition
-                    Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="Auto" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Content="Required" />
-            <TextBox
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="{Binding Text}" />
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="Required" />
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Text="{Binding Text}" />
 
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                Content="Not Second" />
-            <ComboBox
-                Grid.Row="1"
-                Grid.Column="1"
-                SelectedItem="{Binding SelectedComboBoxItem}"
-                ItemsSource="{Binding ComboBoxItems}" />
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="Do not select Second Item" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            SelectedItem="{Binding SelectedComboBoxItem}"
+            ItemsSource="{Binding ComboBoxItems}" />
 
-            <Label
-                Grid.Row="2"
-                Grid.Column="0"
-                Content="Validate on Submit" />
-            <StackPanel
-                Grid.Row="2"
-                Grid.Column="1"
-                Orientation="Horizontal">
-                <PasswordBox
-                    x:Name="PasswordBox"
-                    MinWidth="200"
-                    Tag="{Binding PasswordTag}" />
-                <Button
-                    Content="Submit"
-                    Command="{Binding SubmitCommand}"
-                    CommandParameter="{Binding ElementName=PasswordBox}" />
-            </StackPanel>
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Content="Validate on Submit" />
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <PasswordBox
+                x:Name="PasswordBox"
+                MinWidth="200"
+                Tag="{Binding PasswordTag}" />
+            <Button
+                Content="Submit"
+                Command="{Binding SubmitCommand}"
+                CommandParameter="{Binding ElementName=PasswordBox}" />
+        </StackPanel>
 
-        </Grid>
-    </Expander>
+    </Grid>
 </UserControl>

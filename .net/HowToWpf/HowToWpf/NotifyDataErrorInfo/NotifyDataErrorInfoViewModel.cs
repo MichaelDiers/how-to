@@ -3,8 +3,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Md.Libs.Wpf.Base;
-using Md.Libs.Wpf.Commands;
+using Libs.Wpf.Commands;
+using Libs.Wpf.DependencyInjection;
+using Libs.Wpf.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 internal class NotifyDataErrorInfoViewModel : ValidatorViewModelBase
 {
@@ -19,9 +21,51 @@ internal class NotifyDataErrorInfoViewModel : ValidatorViewModelBase
     private string selectedComboBoxItem = string.Empty;
 
     /// <summary>
+    ///     The submit command.
+    /// </summary>
+    private ICommand submitCommand = null!;
+
+    /// <summary>
     ///     The text.
     /// </summary>
     private string text = string.Empty;
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="NotifyDataErrorInfoViewModel" /> class.
+    /// </summary>
+    public NotifyDataErrorInfoViewModel()
+    {
+        var serviceProvider = CustomServiceProviderBuilder.Build(ServiceCollectionExtensions.TryAddCommandFactory);
+        var commandFactory = serviceProvider.GetRequiredService<ICommandFactory>();
+
+        this.SubmitCommand = commandFactory.CreateSyncCommand<PasswordBox>(
+            passwordBox =>
+            {
+                if (passwordBox is null)
+                {
+                    this.SetError(
+                        "Password is required.",
+                        nameof(NotifyDataErrorInfoViewModel.PasswordTag));
+                    return false;
+                }
+
+                if (passwordBox.SecurePassword.Length < 8)
+                {
+                    this.SetError(
+                        "Password too short.",
+                        nameof(NotifyDataErrorInfoViewModel.PasswordTag));
+                    return false;
+                }
+
+                this.ResetErrors(nameof(NotifyDataErrorInfoViewModel.PasswordTag));
+                return true;
+            },
+            _ => MessageBox.Show(
+                "Executed",
+                "Executed",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information));
+    }
 
     public IEnumerable<string> ComboBoxItems => ["First", "Second", "Third"];
 
@@ -60,36 +104,16 @@ internal class NotifyDataErrorInfoViewModel : ValidatorViewModelBase
     }
 
     /// <summary>
-    ///     Gets the submit command.
+    ///     Gets or sets the submit command.
     /// </summary>
-    public ICommand SubmitCommand =>
-        CommandFactory.CreateSyncCommand<PasswordBox>(
-            passwordBox =>
-            {
-                if (passwordBox is null)
-                {
-                    this.SetError(
-                        "Password is required.",
-                        nameof(NotifyDataErrorInfoViewModel.PasswordTag));
-                    return false;
-                }
-
-                if (passwordBox.SecurePassword.Length < 8)
-                {
-                    this.SetError(
-                        "Password too short.",
-                        nameof(NotifyDataErrorInfoViewModel.PasswordTag));
-                    return false;
-                }
-
-                this.ResetErrors(nameof(NotifyDataErrorInfoViewModel.PasswordTag));
-                return true;
-            },
-            _ => MessageBox.Show(
-                "Executed",
-                "Executed",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information));
+    public ICommand SubmitCommand
+    {
+        get => this.submitCommand;
+        set =>
+            this.SetField(
+                ref this.submitCommand,
+                value);
+    }
 
     /// <summary>
     ///     Gets or sets the text.

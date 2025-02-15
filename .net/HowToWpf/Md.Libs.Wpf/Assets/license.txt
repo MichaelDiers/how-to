@@ -1,5 +1,0 @@
-﻿Material Design by Google
-	https://github.com/google/material-design-icons/blob/master/LICENSE
-
-	- material_symbol_cancel.png
-	- material_symbol_error.png

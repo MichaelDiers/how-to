@@ -1,8 +1,10 @@
 ﻿namespace HowToWpf.Commands;
 
 using System.Windows.Input;
-using Md.Libs.Wpf.Base;
-using Md.Libs.Wpf.Commands;
+using Libs.Wpf.Commands;
+using Libs.Wpf.DependencyInjection;
+using Libs.Wpf.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 ///     The view model of the <see cref="CommandsView" />.
@@ -59,15 +61,18 @@ internal class CommandsViewModel : ViewModelBase
 
     public CommandsViewModel()
     {
+        var serviceProvider = CustomServiceProviderBuilder.Build(ServiceCollectionExtensions.TryAddCommandFactory);
+        var commandFactory = serviceProvider.GetRequiredService<ICommandFactory>();
+
         this.CurrentValueSyncCommand = 0;
-        this.AddIntSyncCommand = CommandFactory.CreateSyncCommand<int?>(
+        this.AddIntSyncCommand = commandFactory.CreateSyncCommand<int?>(
             value => value is not null,
             value =>
             {
                 Thread.Sleep(2000);
                 this.CurrentValueSyncCommand += (int) value!;
             });
-        this.AddCommandParameterSyncCommand = CommandFactory.CreateSyncCommand<AddCommandParameter?>(
+        this.AddCommandParameterSyncCommand = commandFactory.CreateSyncCommand<AddCommandParameter?>(
             value => value is not null,
             value =>
             {
@@ -76,7 +81,7 @@ internal class CommandsViewModel : ViewModelBase
             });
         this.Add3CommandParameter = new AddCommandParameter(3);
 
-        this.AddIntAsyncCommand = CommandFactory.CreateAsyncCommand<int?, int?>(
+        this.AddIntAsyncCommand = commandFactory.CreateAsyncCommand<int?, int?>(
             value => !this.isActive && value is not null,
             () => this.isActive = true,
             async (value, _) =>
@@ -90,7 +95,7 @@ internal class CommandsViewModel : ViewModelBase
                 this.isActive = false;
             });
         this.AddCommandParameterAsyncCommand =
-            CommandFactory.CreateAsyncCommand<AddCommandParameter?, AddCommandParameter?>(
+            commandFactory.CreateAsyncCommand<AddCommandParameter?, AddCommandParameter?>(
                 value => !this.isActive && value is not null,
                 () => this.isActive = true,
                 async (value, _) =>
@@ -104,7 +109,7 @@ internal class CommandsViewModel : ViewModelBase
                     this.isActive = false;
                 });
 
-        this.AddIntCancellableCommand1 = CommandFactory.CreateAsyncCommand<int?, int?>(
+        this.AddIntCancellableCommand1 = commandFactory.CreateAsyncCommand<int?, int?>(
             value => !this.isActiveCancellable && value is not null,
             () => this.isActiveCancellable = true,
             async (value, cancellationToken) =>
@@ -125,7 +130,7 @@ internal class CommandsViewModel : ViewModelBase
                     this.isActiveCancellable = false;
                 }
             });
-        this.AddIntCancellableCommand2 = CommandFactory.CreateAsyncCommand<int?, int?>(
+        this.AddIntCancellableCommand2 = commandFactory.CreateAsyncCommand<int?, int?>(
             value => !this.isActiveCancellable && value is not null,
             () => this.isActiveCancellable = true,
             async (value, cancellationToken) =>

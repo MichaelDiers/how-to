@@ -8,32 +8,19 @@
     Title="MainWindow"
     WindowState="Maximized">
     <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
-                    Width="1*" />
-                <ColumnDefinition
-                    Width="7*" />
-                <ColumnDefinition
-                    Width="1*" />
-            </Grid.ColumnDefinitions>
-            <watermark:WatermarkHowTo
-                Grid.Row="0"
-                Grid.Column="1" />
-            <notifyDataErrorInfo:NotifyDataErrorInfoView
-                Grid.Row="1"
-                Grid.Column="1" />
-            <commands:CommandsView
-                Grid.Row="2"
-                Grid.Column="1" />
-        </Grid>
+        <TabControl>
+            <TabItem
+                Header="Watermark">
+                <watermark:WatermarkHowTo />
+            </TabItem>
+            <TabItem
+                Header="INotifyDataErrorInfo">
+                <notifyDataErrorInfo:NotifyDataErrorInfoView />
+            </TabItem>
+            <TabItem
+                Header="Commands">
+                <commands:CommandsView />
+            </TabItem>
+        </TabControl>
     </ScrollViewer>
 </Window>

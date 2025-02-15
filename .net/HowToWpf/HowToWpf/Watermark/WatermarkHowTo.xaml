@@ -2,90 +2,92 @@
     x:Class="HowToWpf.Watermark.WatermarkHowTo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:watermark="clr-namespace:Md.Libs.Wpf.DependencyProperties.Watermark;assembly=Md.Libs.Wpf"
-    xmlns:watermark1="clr-namespace:HowToWpf.Watermark">
+    xmlns:watermark="clr-namespace:Libs.Wpf.DependencyProperties.Watermark;assembly=Libs.Wpf"
+    xmlns:viewModel="clr-namespace:HowToWpf.Watermark">
     <UserControl.DataContext>
-        <watermark1:WatermarkViewModel />
+        <viewModel:WatermarkViewModel />
     </UserControl.DataContext>
-    <Expander
-        Background="LightGoldenrodYellow"
-        Header="Watermark How-To">
+    <StackPanel
+        Orientation="Vertical">
+        <Expander
+            Header="ComboBox">
+            <StackPanel
+                Orientation="Vertical">
+                <ComboBox
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    SelectedItem="{Binding SelectedComboBoxValue}"
+                    ItemsSource="{Binding ComboBoxValues}"
+                    watermark:WatermarkDependencyProperty.Watermark="Please select" />
+                <ComboBox
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    SelectedItem="{Binding SelectedComboBoxValue}"
+                    ItemsSource="{Binding ComboBoxValues}"
+                    watermark:WatermarkDependencyProperty.Watermark="Please select" />
+                <ComboBox
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    SelectedItem="{Binding SelectedComboBoxValue}"
+                    ItemsSource="{Binding ComboBoxValues}"
+                    watermark:WatermarkDependencyProperty.Watermark="Please select" />
+                <ComboBox
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Bottom"
+                    SelectedItem="{Binding SelectedComboBoxValue}"
+                    ItemsSource="{Binding ComboBoxValues}"
+                    watermark:WatermarkDependencyProperty.Watermark="Please select" />
+            </StackPanel>
+        </Expander>
+        <Expander
+            Header="TextBox">
+            <StackPanel
+                Orientation="Vertical">
+                <TextBox
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    Height="200"
+                    Text="{Binding TextBoxText}"
+                    watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
+                <TextBox
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Height="200"
+                    Text="{Binding TextBoxText}"
+                    watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
+                <TextBox
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    Height="200"
+                    Text="{Binding TextBoxText}"
+                    watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
+                <TextBox
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Bottom"
+                    Height="200"
+                    Text="{Binding TextBoxText}"
+                    watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
+            </StackPanel>
+        </Expander>
+        <Expander
+            Header="PasswordBox">
+            <StackPanel
+                Orientation="Vertical">
+                <PasswordBox
+                    watermark:WatermarkDependencyProperty.Watermark="Enter your password" />
+            </StackPanel>
+        </Expander>
         <StackPanel
-            Orientation="Vertical">
-            <Expander
-                Header="ComboBox">
-                <StackPanel
-                    Orientation="Vertical">
-                    <ComboBox
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Top"
-                        SelectedItem="{Binding SelectedComboBoxValue}"
-                        ItemsSource="{Binding ComboBoxValues}"
-                        watermark:WatermarkDependencyProperty.Watermark="Please select" />
-                    <ComboBox
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        SelectedItem="{Binding SelectedComboBoxValue}"
-                        ItemsSource="{Binding ComboBoxValues}"
-                        watermark:WatermarkDependencyProperty.Watermark="Please select" />
-                    <ComboBox
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        SelectedItem="{Binding SelectedComboBoxValue}"
-                        ItemsSource="{Binding ComboBoxValues}"
-                        watermark:WatermarkDependencyProperty.Watermark="Please select" />
-                    <ComboBox
-                        HorizontalContentAlignment="Right"
-                        VerticalContentAlignment="Bottom"
-                        SelectedItem="{Binding SelectedComboBoxValue}"
-                        ItemsSource="{Binding ComboBoxValues}"
-                        watermark:WatermarkDependencyProperty.Watermark="Please select" />
-                </StackPanel>
-            </Expander>
-            <Expander
-                Header="TextBox">
-                <StackPanel
-                    Orientation="Vertical">
-                    <TextBox
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Top"
-                        Height="200"
-                        Text="{Binding TextBoxText}"
-                        watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
-                    <TextBox
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Height="200"
-                        Text="{Binding TextBoxText}"
-                        watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
-                    <TextBox
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        Height="200"
-                        Text="{Binding TextBoxText}"
-                        watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
-                    <TextBox
-                        HorizontalContentAlignment="Right"
-                        VerticalContentAlignment="Bottom"
-                        Height="200"
-                        Text="{Binding TextBoxText}"
-                        watermark:WatermarkDependencyProperty.Watermark="Enter your text" />
-                </StackPanel>
-            </Expander>
-            <Expander
-                Header="PasswordBox">
-                <StackPanel
-                    Orientation="Vertical">
-                    <PasswordBox
-                        watermark:WatermarkDependencyProperty.Watermark="Enter your password" />
-                </StackPanel>
-            </Expander>
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
             <Button
                 Command="{Binding SetValuesCommand}"
-                Content="Set Values" />
+                Content="Set Values"
+                ToolTip="Set values to all combo boxes and text boxes" />
             <Button
                 Command="{Binding ResetValuesCommand}"
-                Content="Reset Values" />
+                Content="Reset Values"
+                ToolTip="Reset values from all combo boxes and text boxes" />
         </StackPanel>
-    </Expander>
+    </StackPanel>
 </UserControl>
